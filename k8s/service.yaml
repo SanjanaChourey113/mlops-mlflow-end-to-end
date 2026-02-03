@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mlflow-fastapi-service
+spec:
+  selector:
+    app: mlflow-fastapi
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 30350
+  type: NodePort
