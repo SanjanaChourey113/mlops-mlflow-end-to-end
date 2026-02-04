@@ -1,16 +1,27 @@
-# virtual env
-venv/
+name: Docker Image CI
 
-# data & ml artifacts
-data/
-mlruns/
-mlflow.db
-model.pkl
-models/
+on:
+  push:
+    branches: [ "master" ]
 
-# python cache
-__pycache__/
-*.pyc
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
 
-# notebooks checkpoints
-.ipynb_checkpoints/
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Build Docker image
+      run: |
+        docker build -t sanjana113/mlflow-fastapi:latest .
+
+    - name: Push Docker image
+      run: |
+        docker push sanjana113/mlflow-fastapi:latest
