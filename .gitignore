@@ -5,8 +5,7 @@ venv/
 data/
 mlruns/
 mlflow.db
-model.pkl
-models/
+
 
 # python cache
 __pycache__/
